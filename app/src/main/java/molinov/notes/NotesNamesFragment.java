@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,10 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import molinov.notes.ui.data.Notes;
+
 public class NotesNamesFragment extends Fragment {
 
     public static final String CURRENT_NOTE = "CurrentNote";
-    public DataNotes currentNote;
+    public Notes currentNote;
     private boolean isLandscape;
 
     @Override
@@ -39,9 +39,9 @@ public class NotesNamesFragment extends Fragment {
         if (savedInstanceState != null) {
             currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
         } else {
-            currentNote = new DataNotes();
+            currentNote = new Notes();
         }
-        initList(view);
+//        initList(view);
     }
 
     @Override
@@ -58,23 +58,23 @@ public class NotesNamesFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    private void initList(View view) {
-        LinearLayout layoutView = (LinearLayout) view;
-        for (int i = 0; i < currentNote.getArrayNames().size(); i++) {
-            String name = currentNote.getArrayNames().get(i);
-            TextView tv = new TextView(getContext());
-            tv.setText(name);
-            tv.setTextSize(30);
-            layoutView.addView(tv);
-            final int fi = i;
-            tv.setOnClickListener(v -> {
-                currentNote = new DataNotes(fi);
-                showTextOfNotes(currentNote);
-            });
-        }
-    }
+//    private void initList(View view) {
+//        LinearLayout layoutView = (LinearLayout) view;
+//        for (int i = 0; i < currentNote.getArrayNames().size(); i++) {
+//            String name = currentNote.getArrayNames().get(i);
+//            TextView tv = new TextView(getContext());
+//            tv.setText(name);
+//            tv.setTextSize(30);
+//            layoutView.addView(tv);
+//            final int fi = i;
+//            tv.setOnClickListener(v -> {
+//                currentNote = new DataNotes(fi);
+//                showTextOfNotes(currentNote);
+//            });
+//        }
+//    }
 
-    private void showTextOfNotes(DataNotes currentNote) {
+    private void showTextOfNotes(Notes currentNote) {
         if (isLandscape) {
             showLandTextOfNotes(currentNote);
         } else {
@@ -82,7 +82,7 @@ public class NotesNamesFragment extends Fragment {
         }
     }
 
-    private void showLandTextOfNotes(DataNotes currentNote) {
+    private void showLandTextOfNotes(Notes currentNote) {
         NotesTextFragment detail = NotesTextFragment.newInstance(currentNote);
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -91,7 +91,7 @@ public class NotesNamesFragment extends Fragment {
                 .commit();
     }
 
-    private void showPortTextOfNotes(DataNotes currentNote) {
+    private void showPortTextOfNotes(Notes currentNote) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), TextVertical.class);
         intent.putExtra(CURRENT_NOTE, currentNote);

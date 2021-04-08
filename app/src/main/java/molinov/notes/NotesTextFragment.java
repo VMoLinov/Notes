@@ -11,18 +11,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import molinov.notes.ui.data.Notes;
+
 public class NotesTextFragment extends Fragment {
 
     public static final String CURRENT_NOTE = "CurrentNote";
-    private DataNotes dataNotes;
+    private Notes notes;
     private TextView date, text;
     private DatePicker datePicker;
     private Button dateChange;
 
-    public static NotesTextFragment newInstance(DataNotes dataNotes) {
+    public static NotesTextFragment newInstance(Notes notes) {
         NotesTextFragment fragment = new NotesTextFragment();
         Bundle args = new Bundle();
-        args.putParcelable(CURRENT_NOTE, dataNotes);
+        args.putParcelable(CURRENT_NOTE, notes);
         fragment.setArguments(args);
         return fragment;
     }
@@ -31,9 +33,9 @@ public class NotesTextFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            dataNotes = getArguments().getParcelable(CURRENT_NOTE);
+            notes = getArguments().getParcelable(CURRENT_NOTE);
         } else {
-            dataNotes = new DataNotes();
+            notes = new Notes();
         }
 //        setRetainInstance(true);
     }
@@ -48,7 +50,7 @@ public class NotesTextFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(CURRENT_NOTE, dataNotes);
+        outState.putParcelable(CURRENT_NOTE, notes);
         super.onSaveInstanceState(outState);
     }
 
@@ -57,8 +59,8 @@ public class NotesTextFragment extends Fragment {
         text = view.findViewById(R.id.text);
         datePicker = view.findViewById(R.id.datePicker);
         dateChange = view.findViewById(R.id.dateChange);
-        date.setText(dataNotes.getDATE());
-        text.setText(dataNotes.getTEXT());
+//        date.setText(dataNotes.getDATE());
+//        text.setText(dataNotes.getTEXT());
     }
 
     private void initListeners() {
@@ -85,7 +87,7 @@ public class NotesTextFragment extends Fragment {
                     months[datePicker.getMonth()] + " " +
                     datePicker.getYear();
             date.setText(text);
-            dataNotes.setDate(text, dataNotes.getINDEX());
+//            dataNotes.setDate(text, dataNotes.getINDEX());
             dateChange.setVisibility(View.INVISIBLE);
             datePicker.setVisibility(View.INVISIBLE);
         });
