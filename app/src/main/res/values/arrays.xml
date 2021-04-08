@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="names">
+        <item>name1</item>
+        <item>name2</item>
+        <item>name3</item>
+        <item>name4</item>
+        <item>name5</item>
+    </string-array>
+    <string-array name="dates">
+        <item>date1</item>
+        <item>date2</item>
+        <item>date3</item>
+        <item>date4</item>
+        <item>date5</item>
+    </string-array>
+    <string-array name="texts">
+        <item>text1</item>
+        <item>text2</item>
+        <item>text3</item>
+        <item>text4</item>
+        <item>text5</item>
+    </string-array>
+    <string-array name="months">
+        <item name="january" type="string">января</item>
+        <item name="february" type="string">февраля</item>
+        <item name="march" type="string">марта</item>
+        <item name="april" type="string">апреля</item>
+        <item name="may" type="string">мая</item>
+        <item name="june" type="string">июня</item>
+        <item name="jule" type="string">июля</item>
+        <item name="august" type="string">августа</item>
+        <item name="september" type="string">сентября</item>
+        <item name="october" type="string">октября</item>
+        <item name="november" type="string">ноября</item>
+        <item name="december" type="string">декабря</item>
+    </string-array>
+</resources>
