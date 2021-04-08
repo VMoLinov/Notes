@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 public class NotesNamesFragment extends Fragment {
 
     public static final String CURRENT_NOTE = "CurrentNote";
-    private DataNotes currentNote = new DataNotes();
+    public DataNotes currentNote;
     private boolean isLandscape;
 
     @Override
@@ -35,16 +35,18 @@ public class NotesNamesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        if (savedInstanceState != null) {
+            currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
+        } else {
+            currentNote = new DataNotes();
+        }
         initList(view);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-        if (savedInstanceState != null) {
-            currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
-        }
         if (isLandscape) {
             showLandTextOfNotes(currentNote);
         }
@@ -58,8 +60,8 @@ public class NotesNamesFragment extends Fragment {
 
     private void initList(View view) {
         LinearLayout layoutView = (LinearLayout) view;
-        for (int i = 0; i < currentNote.getName().size(); i++) {
-            String name = currentNote.getName().get(i);
+        for (int i = 0; i < currentNote.getArrayNames().size(); i++) {
+            String name = currentNote.getArrayNames().get(i);
             TextView tv = new TextView(getContext());
             tv.setText(name);
             tv.setTextSize(30);

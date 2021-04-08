@@ -8,16 +8,30 @@ import java.util.Arrays;
 
 public class DataNotes implements Parcelable {
 
-    private static ArrayList<String> name = new ArrayList<>(Arrays.asList("name 1", "name 2", "name 3", "name 4", "name 5"));
-    private static ArrayList<String> date = new ArrayList<>(Arrays.asList("date 1", "date 2", "date 3", "date 4", "date 5"));
-    private static ArrayList<String> text = new ArrayList<>(Arrays.asList("text 1", "text 2", "text 3", "text 4", "text 5"));
-    private int index;
-asfasg
+    private static ArrayList<String> arrayNames = new ArrayList<>(Arrays.asList("name 1", "name 2", "name 3", "name 4", "name 5"));
+    private static ArrayList<String> arrayDates = new ArrayList<>(Arrays.asList("date 1", "date 2", "date 3", "date 4", "date 5"));
+    private static ArrayList<String> arrayTexts = new ArrayList<>(Arrays.asList("text 1", "text 2", "text 3", "text 4", "text 5"));
+    private final String NAME;
+    private String DATE;
+    private final String TEXT;
+    private final int INDEX;
+
     protected DataNotes(Parcel in) {
-        name = in.readArrayList(null);
-        date = in.readArrayList(null);
-        text = in.readArrayList(null);
-        index = in.readInt();
+        NAME = in.readString();
+        DATE = in.readString();
+        TEXT = in.readString();
+        INDEX = in.readInt();
+    }
+
+    public DataNotes() {
+        this(0);
+    }
+
+    public DataNotes(int index) {
+        NAME = arrayNames.get(index);
+        DATE = arrayDates.get(index);
+        TEXT = arrayTexts.get(index);
+        this.INDEX = index;
     }
 
     public static final Creator<DataNotes> CREATOR = new Creator<DataNotes>() {
@@ -32,47 +46,40 @@ asfasg
         }
     };
 
-    public DataNotes() {
-        index = 0;
+    public ArrayList<String> getArrayNames() {
+        return arrayNames;
     }
 
-    public DataNotes(int index) {
-        this.index = index;
+//    public String getNAME() {
+//        return NAME;
+//    }
+
+    public String getDATE() {
+        return DATE;
     }
 
-    public ArrayList<String> getName() {
-        return name;
+    public String getTEXT() {
+        return TEXT;
     }
 
-    public ArrayList<String> getDate() {
-        return date;
+    public int getINDEX() {
+        return INDEX;
     }
 
-    public ArrayList<String> getText() {
-        return text;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setName(ArrayList<String> name) {
-        DataNotes.name = name;
-    }
+//    public void setName(ArrayList<String> name) {
+//        DataNotes.name = name;
+//    }
 
     public void setDate(String date, int index) {
-        if (DataNotes.date.get(index) != null) {
-            DataNotes.date.set(index, date);
+        if (arrayDates.get(index) != null) {
+            arrayDates.set(index, date);
+            this.DATE = date;
         }
     }
 
-    public void setText(ArrayList<String> text) {
-        DataNotes.text = text;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
+//    public void setText(ArrayList<String> text) {
+//        DataNotes.text = text;
+//    }
 
     @Override
     public int describeContents() {
@@ -81,9 +88,9 @@ asfasg
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeList(name);
-        dest.writeList(date);
-        dest.writeList(text);
-        dest.writeInt(index);
+        dest.writeString(NAME);
+        dest.writeString(DATE);
+        dest.writeString(TEXT);
+        dest.writeInt(INDEX);
     }
 }

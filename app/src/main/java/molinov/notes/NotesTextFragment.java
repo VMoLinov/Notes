@@ -11,12 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
-
 public class NotesTextFragment extends Fragment {
 
     public static final String CURRENT_NOTE = "CurrentNote";
-    private DataNotes dataNotes = new DataNotes();
+    private DataNotes dataNotes;
     private TextView date, text;
     private DatePicker datePicker;
     private Button dateChange;
@@ -34,6 +32,8 @@ public class NotesTextFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             dataNotes = getArguments().getParcelable(CURRENT_NOTE);
+        } else {
+            dataNotes = new DataNotes();
         }
 //        setRetainInstance(true);
     }
@@ -57,8 +57,8 @@ public class NotesTextFragment extends Fragment {
         text = view.findViewById(R.id.text);
         datePicker = view.findViewById(R.id.datePicker);
         dateChange = view.findViewById(R.id.dateChange);
-        date.setText(dataNotes.getDate().get(dataNotes.getIndex()));
-        text.setText(dataNotes.getText().get(dataNotes.getIndex()));
+        date.setText(dataNotes.getDATE());
+        text.setText(dataNotes.getTEXT());
     }
 
     private void initListeners() {
@@ -85,7 +85,7 @@ public class NotesTextFragment extends Fragment {
                     months[datePicker.getMonth()] + " " +
                     datePicker.getYear();
             date.setText(text);
-            dataNotes.setDate(text, dataNotes.getIndex());
+            dataNotes.setDate(text, dataNotes.getINDEX());
             dateChange.setVisibility(View.INVISIBLE);
             datePicker.setVisibility(View.INVISIBLE);
         });
