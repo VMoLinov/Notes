@@ -2,8 +2,11 @@ package molinov.notes.ui.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class DataNotes {
+
+    private List<Notes> notesList;
 
     protected static ArrayList<String> arrayNames = new ArrayList<>(
             Arrays.asList(
@@ -13,6 +16,7 @@ public class DataNotes {
                     "name 4",
                     "name 5")
     );
+
     protected static ArrayList<String> arrayDates = new ArrayList<>(
             Arrays.asList(
                     "date 1",
@@ -29,4 +33,14 @@ public class DataNotes {
                     "text 4",
                     "text 5")
     );
+    public DataNotes () {
+        notesList = new ArrayList<>();
+        for (int i = 0; i < arrayNames.size(); i++) {
+            notesList.add(new Notes(i));
+        }
+    }
+
+    public Notes getNotesList(int i) {
+        return notesList.get(i);
+    }
 }
