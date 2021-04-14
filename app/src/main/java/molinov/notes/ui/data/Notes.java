@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Notes extends DataNotes implements Parcelable {
 
+    public static String PARCELABLE_KEY;
     private final String name;
     private String date;
     private final String text;
@@ -15,6 +16,18 @@ public class Notes extends DataNotes implements Parcelable {
         name = in.readString();
         date = in.readString();
         text = in.readString();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getText() {
+        return text;
     }
 
     public Notes() {

@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_main" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="molinov.notes.ui.fragments.NoteCard"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_note_card" />
+        android:id="@+id/nav_note"
+        android:name="molinov.notes.ui.fragments.NoteShowFragment"
+        android:label="@string/menu_note"
+        tools:layout="@layout/fragment_note_show" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="molinov.notes.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_info"
+        android:name="molinov.notes.ui.fragments.InfoFragment"
+        android:label="@string/menu_info"
+        tools:layout="@layout/fragment_info" />
 </navigation>

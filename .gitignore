@@ -14,10 +14,4 @@
 .cxx
 local.properties
 
-gradle/wrapper/
-
-app/src/test/java/molinov/myapplication/
-
-*.md
-
 .idea/
