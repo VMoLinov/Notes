@@ -46,11 +46,11 @@ public class Notes implements Parcelable {
     }
 
     public Notes(int index) {
-        Notes note = dn.getNoteFromList(index);
+        Notes note = DataNotes.getNoteFromList(index);
         this.name = note.getName();
         this.date = note.getDate();
         this.text = note.getText();
-//        this = dn.getNotesList(index);
+//        this = note.getNotesList(index);
 //        почему этот вариает не работает?
     }
 

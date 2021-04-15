@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DataNotes {
 
-    private final List<Notes> notesList = new ArrayList<>(Arrays.asList(
+    private static final List<Notes> notesList = new ArrayList<>(Arrays.asList(
             new Notes("Name 1", "Date 1", "Text 1"),
             new Notes("Name 2", "Date 2", "Text 2"),
             new Notes("Name 3", "Date 3", "Text 3"),
@@ -18,11 +18,11 @@ public class DataNotes {
         size = notesList.size();
     }
 
-    public void setNotesList(Notes note, int index) {
+    public static void setNotesList(Notes note, int index) {
         notesList.set(index, note);
     }
 
-    public Notes getNoteFromList(int i) {
+    public static Notes getNoteFromList(int i) {
         return notesList.get(i);
     }
 

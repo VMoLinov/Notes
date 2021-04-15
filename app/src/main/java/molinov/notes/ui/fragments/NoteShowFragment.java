@@ -19,13 +19,15 @@ public class NoteShowFragment extends Fragment {
     private EditText noteShowName, noteShowText;
     private TextView noteShowDate;
     private Notes note;
-    private int position;
+    private static int position;
 
     public static NoteShowFragment newInstance(Notes note, int position) {
         NoteShowFragment fragment = new NoteShowFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(Notes.PARCELABLE_KEY, note);
-        bundle.putInt(Notes.PARCELABLE_KEY, position);
+//        bundle.putInt(Notes.PARCELABLE_KEY, position);
+//        crash after this
+        NoteShowFragment.position = position;
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -53,10 +55,16 @@ public class NoteShowFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             note = getArguments().getParcelable(Notes.PARCELABLE_KEY);
-            position = getArguments().getInt(Notes.PARCELABLE_KEY);
         } else {
             note = new Notes();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Bundle bundle = new Bundle();
+        onSaveInstanceState(bundle);
     }
 
     @Override
@@ -65,8 +73,7 @@ public class NoteShowFragment extends Fragment {
         note.setName(noteShowName.getText().toString());
         note.setDate(noteShowDate.getText().toString());
         note.setText(noteShowText.getText().toString());
-        DataNotes dn = new DataNotes();
-        dn.setNotesList(note, position);
+        DataNotes.setNotesList(note, position);
         outState.putParcelable(Notes.PARCELABLE_KEY, note);
     }
 }
