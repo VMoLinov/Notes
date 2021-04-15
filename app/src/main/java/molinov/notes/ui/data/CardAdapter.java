@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import molinov.notes.R;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
-    private DataNotes dataNote;
+    private final DataNotes dataNote;
     private OnItemClickListener listener;
 
     public CardAdapter(DataNotes dataNote) {
@@ -26,7 +26,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CardAdapter.ViewHolder holder, int position) {
-        holder.setData(dataNote.getNoteFromList(position));
+        holder.setData(DataNotes.getNoteFromList(position));
     }
 
     @Override

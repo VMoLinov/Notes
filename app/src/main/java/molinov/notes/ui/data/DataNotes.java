@@ -12,11 +12,7 @@ public class DataNotes {
             new Notes("Name 3", "Date 3", "Text 3"),
             new Notes("Name 4", "Date 4", "Text 4"),
             new Notes("Name 5", "Date 5", "Text 5")));
-    private final int size;
-
-    public DataNotes() {
-        size = notesList.size();
-    }
+    private static final int size = notesList.size();
 
     public static void setNotesList(Notes note, int index) {
         notesList.set(index, note);

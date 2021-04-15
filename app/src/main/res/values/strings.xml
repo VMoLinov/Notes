@@ -28,4 +28,6 @@
     <string name="menu_note">Заметка 1</string>
     <string name="menu_info">О приложении</string>
     <string name="my_notes">Мои заметки</string>
+    <string name="add">Add</string>
+    <string name="clear">clear</string>
 </resources>
