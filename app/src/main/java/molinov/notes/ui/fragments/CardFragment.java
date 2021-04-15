@@ -4,14 +4,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Locale;
 
 import molinov.notes.R;
 import molinov.notes.ui.data.CardAdapter;
 import molinov.notes.ui.data.DataNotes;
+import molinov.notes.ui.data.Notes;
 
 public class CardFragment extends Fragment {
 
@@ -25,6 +33,7 @@ public class CardFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycle_view);
         DataNotes data = new DataNotes();
         initRecycleView(recyclerView, data);
+        setRetainInstance(true);
         return view;
     }
 
@@ -34,5 +43,16 @@ public class CardFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         final CardAdapter adapter = new CardAdapter(data);
         recyclerView.setAdapter(adapter);
-        }
+        adapter.setOnItemClickListener((view, position) -> {
+            Notes note = new Notes(position);
+            NoteShowFragment noteShowFragment = NoteShowFragment.newInstance(note, position);
+            FragmentManager fm = getParentFragmentManager();
+            fm.beginTransaction()
+                    .replace(R.id.nav_host_fragment, noteShowFragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
+//                Toast.makeText(getContext(), String.format(Locale.getDefault(), "Позиция %d", position), Toast.LENGTH_SHORT).show());
+}

@@ -3,15 +3,13 @@ package molinov.notes.ui.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Notes extends DataNotes implements Parcelable {
+public class Notes implements Parcelable {
 
     public static String PARCELABLE_KEY;
-    private final String name;
+    private String name;
     private String date;
-    private final String text;
+    private String text;
+
 
     protected Notes(Parcel in) {
         name = in.readString();
@@ -31,14 +29,35 @@ public class Notes extends DataNotes implements Parcelable {
         return text;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public Notes() {
-        this(0);
+        this("Name 1", "Date 1", "Text 1");
     }
 
     public Notes(int index) {
-        name = arrayNames.get(index);
-        date = arrayDates.get(index);
-        text = arrayTexts.get(index);
+        Notes note = dn.getNoteFromList(index);
+        this.name = note.getName();
+        this.date = note.getDate();
+        this.text = note.getText();
+//        this = dn.getNotesList(index);
+//        почему этот вариает не работает?
+    }
+
+    public Notes(String name, String date, String text) {
+        this.name = name;
+        this.date = date;
+        this.text = text;
     }
 
     public static final Creator<Notes> CREATOR = new Creator<Notes>() {
@@ -52,17 +71,6 @@ public class Notes extends DataNotes implements Parcelable {
             return new Notes[size];
         }
     };
-
-    public static ArrayList<String> getNames() {
-        return arrayNames;
-    }
-
-    public void setDate(String date, int index) {
-        if (arrayDates.get(index) != null) {
-            arrayDates.set(index, date);
-            this.date = date;
-        }
-    }
 
     @Override
     public int describeContents() {
