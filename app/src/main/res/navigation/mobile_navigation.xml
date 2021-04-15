@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_main">
+
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="molinov.notes.ui.fragments.MainFragment"
+        android:label="@string/my_notes"
+        tools:layout="@layout/fragment_main" />
+
+    <fragment
+        android:id="@+id/nav_note"
+        android:name="molinov.notes.ui.fragments.NoteShowFragment"
+        android:label="@string/menu_note"
+        tools:layout="@layout/fragment_note_show" />
+
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="molinov.notes.ui.fragments.InfoFragment"
+        android:label="@string/menu_info"
+        tools:layout="@layout/fragment_info" />
+</navigation>
