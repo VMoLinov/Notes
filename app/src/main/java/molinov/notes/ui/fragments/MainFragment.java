@@ -1,3 +1,4 @@
+/*
 package molinov.notes.ui.fragments;
 
 import android.content.res.Configuration;
@@ -98,3 +99,4 @@ public class MainFragment extends Fragment {
                 .commit();
     }
 }
+*/
