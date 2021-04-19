@@ -2,16 +2,17 @@ package molinov.notes.ui.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class DataNotes implements CardsSource {
 
     private static final List<Notes> notesList = new ArrayList<>(Arrays.asList(
-            new Notes("Name 1", "Date 1", "Text 1"),
-            new Notes("Name 2", "Date 2", "Text 2"),
-            new Notes("Name 3", "Date 3", "Text 3"),
-            new Notes("Name 4", "Date 4", "Text 4"),
-            new Notes("Name 5", "Date 5", "Text 5")));
+            new Notes("Name 1", new Date(), "Text 1"),
+            new Notes("Name 2", new Date(), "Text 2"),
+            new Notes("Name 3", new Date(), "Text 3"),
+            new Notes("Name 4", new Date(), "Text 4"),
+            new Notes("Name 5", new Date(), "Text 5")));
 
     public static void setNotesList(Notes note, int index) {
         notesList.set(index, note);

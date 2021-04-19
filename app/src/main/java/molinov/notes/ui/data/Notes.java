@@ -1,31 +1,30 @@
 package molinov.notes.ui.data;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Notes implements Parcelable {
 
     public static String PARCELABLE_KEY;
     private String name;
-    private String date;
     private String text;
+    private Date date;
 
 
     protected Notes(Parcel in) {
         name = in.readString();
-        date = in.readString();
         text = in.readString();
+        date = new Date(in.readLong());
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -37,7 +36,7 @@ public class Notes implements Parcelable {
         this.name = name;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -47,15 +46,14 @@ public class Notes implements Parcelable {
 
     public Notes() {
         this("New Note", null, "Enter text here");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            date = String.valueOf(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        }
+        date = Calendar.getInstance().getTime();
+//            date = String.valueOf(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
-    public Notes(String name, String date, String text) {
+    public Notes(String name, Date date, String text) {
         this.name = name;
-        this.date = date;
         this.text = text;
+        this.date = date;
     }
 
     public Notes(int index) {
@@ -85,7 +83,7 @@ public class Notes implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeString(date);
         dest.writeString(text);
+        dest.writeLong(date.getTime());
     }
 }

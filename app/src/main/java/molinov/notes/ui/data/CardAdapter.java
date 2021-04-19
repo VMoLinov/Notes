@@ -1,5 +1,6 @@
 package molinov.notes.ui.data;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
 
 import molinov.notes.R;
 
@@ -86,10 +90,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             }
         }
 
+        @SuppressLint("SimpleDateFormat")
         public void setData(Notes note) {
             name.setText(note.getName());
-            date.setText(note.getDate());
             text.setText(note.getText());
+            date.setText(new SimpleDateFormat("dd-MM-yy").format(note.getDate()));
         }
     }
 }
