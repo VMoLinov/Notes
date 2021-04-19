@@ -113,7 +113,7 @@ public class CardFragment extends Fragment {
         int position = adapter.getMenuPosition();
         switch (item.getItemId()) {
             case (R.id.action_update):
-                NoteShowFragment noteShowFragment = NoteShowFragment.newInstance(new Notes(position), position);
+                NoteShowFragment noteShowFragment = NoteShowFragment.newInstance(new Notes(position));
                 openNote(noteShowFragment);
                 publisher.subscribe(note -> {
                     data.updateCardData(position, note);
