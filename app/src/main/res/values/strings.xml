@@ -30,4 +30,6 @@
     <string name="my_notes">Мои заметки</string>
     <string name="add">Add</string>
     <string name="clear">clear</string>
+    <string name="update">update</string>
+    <string name="delete">delete</string>
 </resources>

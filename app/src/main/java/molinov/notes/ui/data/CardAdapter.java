@@ -1,24 +1,35 @@
 package molinov.notes.ui.data;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import molinov.notes.R;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     private final DataNotes dataNote;
+    private final Fragment fragment;
     private OnItemClickListener listener;
+    private int menuPosition;
 
-    public CardAdapter(DataNotes dataNote) {
-        this.dataNote = dataNote;
+    public int getMenuPosition() {
+        return menuPosition;
     }
 
-    @NonNull
+    public CardAdapter(DataNotes dataNote, Fragment fragment) {
+        this.dataNote = dataNote;
+        this.fragment = fragment;
+    }
+
+    @NotNull
     @Override
     public CardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false));
@@ -50,11 +61,29 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             name = itemView.findViewById(R.id.name);
             date = itemView.findViewById(R.id.date);
             text = itemView.findViewById(R.id.text);
+            registerContextMenu(itemView);
             itemView.setOnClickListener(v -> {
                 if (listener != null) {
                     listener.onItemClick(v, getAdapterPosition());
                 }
             });
+            itemView.setOnLongClickListener(v -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    menuPosition = getLayoutPosition();
+                    itemView.showContextMenu(10, 10);
+                }
+                return true;
+            });
+        }
+
+        private void registerContextMenu(View itemView) {
+            if (fragment != null) {
+                itemView.setOnLongClickListener(v -> {
+                    menuPosition = getLayoutPosition();
+                    return false;
+                });
+                fragment.registerForContextMenu(itemView);
+            }
         }
 
         public void setData(Notes note) {

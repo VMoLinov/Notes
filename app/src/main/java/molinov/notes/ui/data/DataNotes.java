@@ -12,7 +12,6 @@ public class DataNotes implements CardsSource {
             new Notes("Name 3", "Date 3", "Text 3"),
             new Notes("Name 4", "Date 4", "Text 4"),
             new Notes("Name 5", "Date 5", "Text 5")));
-    private static final int size = notesList.size();
 
     public static void setNotesList(Notes note, int index) {
         notesList.set(index, note);
@@ -23,7 +22,7 @@ public class DataNotes implements CardsSource {
     }
 
     public int getSize() {
-        return size;
+        return notesList.size();
     }
 
     @Override

@@ -25,8 +25,6 @@ public class NoteShowFragment extends Fragment {
         NoteShowFragment fragment = new NoteShowFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(Notes.PARCELABLE_KEY, note);
-//        bundle.putInt(Notes.PARCELABLE_KEY, position);
-//        crash after this
         NoteShowFragment.position = position;
         fragment.setArguments(bundle);
         return fragment;
@@ -36,7 +34,6 @@ public class NoteShowFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_note_show, container, false);
         initFields(view);
-//        initListeners();
         setRetainInstance(true);
         return view;
     }
@@ -63,8 +60,10 @@ public class NoteShowFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        Bundle bundle = new Bundle();
-        onSaveInstanceState(bundle);
+        if (position != 0) {
+            Bundle bundle = new Bundle();
+            onSaveInstanceState(bundle);
+        }
     }
 
     @Override

@@ -1,7 +1,11 @@
 package molinov.notes.ui.data;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Notes implements Parcelable {
 
@@ -42,7 +46,16 @@ public class Notes implements Parcelable {
     }
 
     public Notes() {
-        this("Name 1", "Date 1", "Text 1");
+        this("New Note", null, "Enter text here");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            date = String.valueOf(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        }
+    }
+
+    public Notes(String name, String date, String text) {
+        this.name = name;
+        this.date = date;
+        this.text = text;
     }
 
     public Notes(int index) {
@@ -50,14 +63,6 @@ public class Notes implements Parcelable {
         this.name = note.getName();
         this.date = note.getDate();
         this.text = note.getText();
-//        this = note.getNotesList(index);
-//        почему этот вариает не работает?
-    }
-
-    public Notes(String name, String date, String text) {
-        this.name = name;
-        this.date = date;
-        this.text = text;
     }
 
     public static final Creator<Notes> CREATOR = new Creator<Notes>() {
