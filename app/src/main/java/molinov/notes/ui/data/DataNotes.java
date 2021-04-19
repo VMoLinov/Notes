@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DataNotes {
+public class DataNotes implements CardsSource {
 
     private static final List<Notes> notesList = new ArrayList<>(Arrays.asList(
             new Notes("Name 1", "Date 1", "Text 1"),
@@ -24,5 +24,25 @@ public class DataNotes {
 
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public void deleteCardData(int position) {
+        notesList.remove(position);
+    }
+
+    @Override
+    public void updateCardData(int position, Notes note) {
+        notesList.set(position, note);
+    }
+
+    @Override
+    public void addCardData(Notes note) {
+        notesList.add(note);
+    }
+
+    @Override
+    public void clearCardData() {
+        notesList.clear();
     }
 }
