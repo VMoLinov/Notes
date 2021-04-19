@@ -1,17 +1,19 @@
 package molinov.notes.ui.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import java.text.SimpleDateFormat;
@@ -27,15 +29,13 @@ public class NoteShowFragment extends Fragment {
     private EditText noteShowName, noteShowText;
     private TextView noteShowDate;
     private Publisher publisher;
-    private DatePicker datePicker;
     private Notes note;
-    private static int position;
+    private DatePickerDialog dialog;
 
-    public static NoteShowFragment newInstance(Notes note, int position) {
+    public static NoteShowFragment newInstance(Notes note) {
         NoteShowFragment fragment = new NoteShowFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(Notes.PARCELABLE_KEY, note);
-        NoteShowFragment.position = position;
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -67,10 +67,12 @@ public class NoteShowFragment extends Fragment {
         super.onDetach();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_note_show, container, false);
         initFields(view);
+        initListeners(view);
         if (note != null) {
             populateView();
         }
@@ -93,23 +95,40 @@ public class NoteShowFragment extends Fragment {
     private Notes collectNote() {
         String name = this.noteShowName.getText().toString();
         String text = this.noteShowText.getText().toString();
-        Date date = getDateFromDatePicker();
+        Date date = note.getDate();
         return new Notes(name, date, text);
     }
 
-    private Date getDateFromDatePicker() {
+
+    private Date getDateFromDialog(int year, int month, int dayOfMonth) {
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, this.datePicker.getYear());
-        cal.set(Calendar.MONTH, this.datePicker.getMonth());
-        cal.set(Calendar.DAY_OF_MONTH, this.datePicker.getDayOfMonth());
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         return cal.getTime();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void initFields(View view) {
         noteShowName = view.findViewById(R.id.noteShowName);
         noteShowDate = view.findViewById(R.id.noteShowDate);
         noteShowText = view.findViewById(R.id.noteShowText);
-        datePicker = view.findViewById(R.id.datePicker);
+        dialog = new DatePickerDialog(getContext());
+        dialog.setTitle("Choice date");
+        dialog.setContentView(R.layout.fragment_note_show);
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void initListeners(View view) {
+        noteShowDate.setOnClickListener(v -> {
+            dialog.show();
+        });
+        dialog.setOnDateSetListener((view1, year, month, dayOfMonth) -> {
+            Date date = getDateFromDialog(year, month, dayOfMonth);
+            note.setDate(date);
+            noteShowDate.setText(new SimpleDateFormat("dd-MM-yy").format(date));
+        });
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -117,17 +136,16 @@ public class NoteShowFragment extends Fragment {
         noteShowName.setText(note.getName());
         noteShowText.setText(note.getText());
         noteShowDate.setText(new SimpleDateFormat("dd-MM-yy").format(note.getDate()));
-        initDatePicker(note.getDate());
     }
 
-    private void initDatePicker(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        this.datePicker.init(calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH),
-                null);
-    }
+//    private void initDatePicker(Date date) {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(date);
+//        this.datePicker.init(calendar.get(Calendar.YEAR),
+//                calendar.get(Calendar.MONTH),
+//                calendar.get(Calendar.DAY_OF_MONTH),
+//                null);
+}
 
 //    @Override
 //    public void onPause() {
@@ -147,4 +165,3 @@ public class NoteShowFragment extends Fragment {
 //        DataNotes.setNotesList(note, position);
 //        outState.putParcelable(Notes.PARCELABLE_KEY, note);
 //    }
-}

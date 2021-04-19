@@ -42,16 +42,5 @@
                 android:background="@android:color/transparent"
                 android:textSize="@dimen/text_size" />
         </LinearLayout>
-
-        <DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
