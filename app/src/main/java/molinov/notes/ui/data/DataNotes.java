@@ -31,7 +31,6 @@ public class DataNotes implements CardsSource {
         notesList.remove(position);
     }
 
-    @Override
     public void updateCardData(int position, Notes note) {
         notesList.set(position, note);
     }

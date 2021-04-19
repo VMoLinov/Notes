@@ -1,5 +1,6 @@
 package molinov.notes.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,12 +14,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import molinov.notes.MainActivity;
 import molinov.notes.R;
-import molinov.notes.ui.data.DataNotes;
 import molinov.notes.ui.data.Notes;
 import molinov.notes.ui.observe.Publisher;
 
@@ -85,8 +86,8 @@ public class NoteShowFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         publisher.notifySingle(note);
+        super.onDestroy();
     }
 
     private Notes collectNote() {
@@ -111,10 +112,11 @@ public class NoteShowFragment extends Fragment {
         datePicker = view.findViewById(R.id.datePicker);
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void populateView() {
         noteShowName.setText(note.getName());
         noteShowText.setText(note.getText());
-//        noteShowDate.setText(note.getDate());
+        noteShowDate.setText(new SimpleDateFormat("dd-MM-yy").format(note.getDate()));
         initDatePicker(note.getDate());
     }
 

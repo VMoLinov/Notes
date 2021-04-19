@@ -3,7 +3,6 @@ package molinov.notes.ui.observe;
 import java.util.ArrayList;
 import java.util.List;
 
-import molinov.notes.ui.data.DataNotes;
 import molinov.notes.ui.data.Notes;
 
 public class Publisher {

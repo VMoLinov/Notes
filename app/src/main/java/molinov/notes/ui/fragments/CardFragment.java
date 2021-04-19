@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import molinov.notes.MainActivity;
-import molinov.notes.MainNavigation;
 import molinov.notes.R;
 import molinov.notes.ui.data.CardAdapter;
 import molinov.notes.ui.data.DataNotes;
@@ -32,7 +31,6 @@ public class CardFragment extends Fragment {
     private DataNotes data;
     private CardAdapter adapter;
     private RecyclerView recyclerView;
-    private MainNavigation navigation;
     private Publisher publisher;
     private boolean moveToLastPosition;
 
@@ -60,13 +58,11 @@ public class CardFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         MainActivity activity = (MainActivity) context;
-        navigation = activity.getNavigation();
         publisher = activity.getPublisher();
     }
 
     @Override
     public void onDetach() {
-        navigation = null;
         publisher = null;
         super.onDetach();
     }
@@ -76,10 +72,8 @@ public class CardFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-//                data.addCardData(new Notes());
-//                adapter.notifyItemInserted(data.getSize() - 1);
-//                recyclerView.scrollToPosition(data.getSize() - 1);
-                navigation.addFragment(NoteShowFragment.newInstance(), true);
+                NoteShowFragment noteShowFragment = NoteShowFragment.newInstance();
+                openNote(noteShowFragment);
                 publisher.subscribe(note -> {
                     data.addCardData(note);
                     adapter.notifyItemInserted(data.getSize() - 1);
@@ -105,16 +99,6 @@ public class CardFragment extends Fragment {
             recyclerView.smoothScrollToPosition(data.getSize() - 1);
             moveToLastPosition = false;
         }
-        adapter.setOnItemClickListener((view, position) -> {
-            Notes note = new Notes(position);
-            NoteShowFragment noteShowFragment = NoteShowFragment.newInstance(note, position);
-            FragmentManager fm = getParentFragmentManager();
-            fm.beginTransaction()
-                    .replace(R.id.nav_host_fragment, noteShowFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .addToBackStack(null)
-                    .commit();
-        });
     }
 
     @Override
@@ -129,9 +113,8 @@ public class CardFragment extends Fragment {
         int position = adapter.getMenuPosition();
         switch (item.getItemId()) {
             case (R.id.action_update):
-//                data.updateCardData(position, new Notes());
-//                adapter.notifyItemChanged(position);
-                navigation.addFragment(NoteShowFragment.newInstance(DataNotes.getNoteFromList(position), position), true);
+                NoteShowFragment noteShowFragment = NoteShowFragment.newInstance(new Notes(position), position);
+                openNote(noteShowFragment);
                 publisher.subscribe(note -> {
                     data.updateCardData(position, note);
                     adapter.notifyItemChanged(position);
@@ -143,5 +126,14 @@ public class CardFragment extends Fragment {
                 return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void openNote(Fragment fragment) {
+        FragmentManager fm = getParentFragmentManager();
+        fm.beginTransaction()
+                .replace(R.id.nav_host_fragment, fragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -1,6 +1,5 @@
 package molinov.notes.ui.observe;
 
-import molinov.notes.ui.data.DataNotes;
 import molinov.notes.ui.data.Notes;
 
 public interface Observer {
