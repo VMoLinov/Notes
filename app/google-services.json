@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "56823189689",
+    "project_id": "notes-a72be",
+    "storage_bucket": "notes-a72be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56823189689:android:f303e25fb9141f4288cb68",
+        "android_client_info": {
+          "package_name": "molinov.notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56823189689-8og9rc94jj18rd8ism935ckmo2s39f56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOq_Ig3EMXAmgBMRR5hTN2xUqwry_8kBA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56823189689-8og9rc94jj18rd8ism935ckmo2s39f56.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
