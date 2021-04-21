@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class DataNotes implements CardsSource {
 
-    private static final List<Notes> notesList = new ArrayList<>(Arrays.asList(
+    protected static final List<Notes> notesList = new ArrayList<>(Arrays.asList(
             new Notes("Name 1", new Date(new Random().nextLong()), "Text 1"),
             new Notes("Name 2", new Date(new Random().nextLong()), "Text 2"),
             new Notes("Name 3", new Date(new Random().nextLong()), "Text 3"),

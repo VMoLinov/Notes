@@ -18,7 +18,7 @@ public class CardsSourceFirebase implements CardsSource {
     private final String TAG = "[CardsSourceFirebase]";
     private final FirebaseFirestore store = FirebaseFirestore.getInstance();
     private final CollectionReference collection = store.collection(CARDS_COLLECTION);
-    private List<Notes> notes;
+    private List<Notes> notes = new ArrayList<>();
 
 
     @Override
@@ -26,7 +26,7 @@ public class CardsSourceFirebase implements CardsSource {
         collection.orderBy(CardDataMapping.Fields.DATE, Query.Direction.DESCENDING).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        notes = new ArrayList<>();
+//                        notes = new ArrayList<>();
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             Map<String, Object> doc = document.getData();
                             String id = document.getId();

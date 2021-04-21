@@ -27,6 +27,7 @@ import molinov.notes.ui.data.CardsSourceFirebase;
 import molinov.notes.ui.data.CardsSourceResponse;
 import molinov.notes.ui.data.DataNotes;
 import molinov.notes.ui.data.Notes;
+import molinov.notes.ui.observe.Observer;
 import molinov.notes.ui.observe.Publisher;
 
 public class CardFragment extends Fragment {
@@ -41,12 +42,6 @@ public class CardFragment extends Fragment {
     public static CardFragment newInstance() {
         return new CardFragment();
     }
-
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        data = new DataNotes();
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,27 +70,6 @@ public class CardFragment extends Fragment {
         super.onDetach();
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                NoteShowFragment noteShowFragment = NoteShowFragment.newInstance();
-                openNote(noteShowFragment);
-                publisher.subscribe(note -> {
-                    data.addCardData(note);
-                    adapter.notifyItemInserted(data.getSize() - 1);
-                    moveToLastPosition = true;
-                });
-                return true;
-            case R.id.action_clear:
-                data.clearCardData();
-                adapter.notifyDataSetChanged();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void initRecycleView() {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -116,24 +90,52 @@ public class CardFragment extends Fragment {
         inflater.inflate(R.menu.card_menu, menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return onItemSelected(item.getItemId()) ||
+                super.onOptionsItemSelected(item);
+    }
+
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        int position = adapter.getMenuPosition();
-        switch (item.getItemId()) {
-            case (R.id.action_update):
-                NoteShowFragment noteShowFragment = NoteShowFragment.newInstance(new Notes(position));
-                openNote(noteShowFragment);
+        return onItemSelected(item.getItemId()) ||
+                super.onOptionsItemSelected(item);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    private boolean onItemSelected(int itemId) {
+        switch (itemId) {
+            case R.id.action_add:
+                NoteShowFragment noteShowFragmentAdd = NoteShowFragment.newInstance();
+                openNote(noteShowFragmentAdd);
                 publisher.subscribe(note -> {
-                    data.updateCardData(position, note);
-                    adapter.notifyItemChanged(position);
+                    data.addCardData(note);
+                    adapter.notifyItemInserted(data.getSize() - 1);
+                    moveToFirstPosition = true;
                 });
                 return true;
-            case (R.id.action_delete):
-                data.deleteCardData(position);
-                adapter.notifyItemRemoved(position);
+            case R.id.action_update:
+                final int updatePosition = adapter.getMenuPosition();
+                NoteShowFragment noteShowFragmentUpdate = NoteShowFragment.newInstance(new Notes(updatePosition));
+                openNote(noteShowFragmentUpdate);
+                publisher.subscribe(note -> {
+                    data.updateCardData(updatePosition, note);
+                    adapter.notifyItemChanged(updatePosition);
+                });
+                return true;
+            case R.id.action_delete:
+                final int deletePosition = adapter.getMenuPosition();
+                data.deleteCardData(deletePosition);
+                adapter.notifyItemRemoved(deletePosition);
+                return true;
+            case R.id.action_clear:
+                data.clearCardData();
+                adapter.notifyDataSetChanged();
                 return true;
         }
-        return super.onContextItemSelected(item);
+        return false;
+
     }
 
     private void openNote(Fragment fragment) {
