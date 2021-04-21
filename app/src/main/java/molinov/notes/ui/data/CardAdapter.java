@@ -18,8 +18,9 @@ import java.text.SimpleDateFormat;
 import molinov.notes.R;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
-    private final DataNotes dataNote;
+    //    private final DataNotes dataNote;
     private final Fragment fragment;
+    private CardsSource dataSource;
     private OnItemClickListener listener;
     private int menuPosition;
 
@@ -27,9 +28,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         return menuPosition;
     }
 
-    public CardAdapter(DataNotes dataNote, Fragment fragment) {
-        this.dataNote = dataNote;
+    public CardAdapter(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    public void setDataSource(CardsSource dataSource) {
+        this.dataSource = dataSource;
+        notifyDataSetChanged();
     }
 
     @NotNull
@@ -45,7 +50,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return dataNote.getSize();
+        return dataSource.getSize();
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

@@ -96,7 +96,11 @@ public class NoteShowFragment extends Fragment {
         String name = this.noteShowName.getText().toString();
         String text = this.noteShowText.getText().toString();
         Date date = note.getDate();
-        return new Notes(name, date, text);
+        if (note.getId() != null) {
+            return new Notes(note.getId(), name, date, text);
+        } else {
+            return new Notes(name, date, text);
+        }
     }
 
 

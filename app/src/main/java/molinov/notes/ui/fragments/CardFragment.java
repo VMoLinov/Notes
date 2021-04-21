@@ -22,27 +22,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import molinov.notes.MainActivity;
 import molinov.notes.R;
 import molinov.notes.ui.data.CardAdapter;
+import molinov.notes.ui.data.CardsSource;
+import molinov.notes.ui.data.CardsSourceFirebase;
+import molinov.notes.ui.data.CardsSourceResponse;
 import molinov.notes.ui.data.DataNotes;
 import molinov.notes.ui.data.Notes;
 import molinov.notes.ui.observe.Publisher;
 
 public class CardFragment extends Fragment {
 
-    private DataNotes data;
+    //    private DataNotes data;
+    private CardsSource data;
     private CardAdapter adapter;
     private RecyclerView recyclerView;
     private Publisher publisher;
-    private boolean moveToLastPosition;
+    private boolean moveToFirstPosition;
 
     public static CardFragment newInstance() {
         return new CardFragment();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        data = new DataNotes();
-    }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        data = new DataNotes();
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +54,10 @@ public class CardFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycle_view);
         initRecycleView();
         setHasOptionsMenu(true);
+        data = new CardsSourceFirebase().init(cardsData -> {
+            adapter.notifyDataSetChanged();
+        });
+        adapter.setDataSource(data);
         setRetainInstance(true);
         return view;
     }
@@ -92,12 +100,12 @@ public class CardFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new CardAdapter(data, this);
+        adapter = new CardAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        if (moveToLastPosition) {
-            recyclerView.smoothScrollToPosition(data.getSize() - 1);
-            moveToLastPosition = false;
+        if (moveToFirstPosition && data.getSize() > 0) {
+            recyclerView.smoothScrollToPosition(0);
+            moveToFirstPosition = false;
         }
     }
 

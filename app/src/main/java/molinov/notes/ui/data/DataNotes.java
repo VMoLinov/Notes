@@ -28,6 +28,14 @@ public class DataNotes implements CardsSource {
     }
 
     @Override
+    public CardsSource init(CardsSourceResponse cardsSourceResponse) {
+        if (cardsSourceResponse != null) {
+            cardsSourceResponse.initialized(this);
+        }
+        return this;
+    }
+
+    @Override
     public void deleteCardData(int position) {
         notesList.remove(position);
     }

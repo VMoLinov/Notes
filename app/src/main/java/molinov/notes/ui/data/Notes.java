@@ -9,15 +9,21 @@ import java.util.Date;
 public class Notes implements Parcelable {
 
     public static String PARCELABLE_KEY;
+    private String id;
     private String name;
     private String text;
     private Date date;
 
 
     protected Notes(Parcel in) {
+        id = in.readString();
         name = in.readString();
         text = in.readString();
         date = new Date(in.readLong());
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -30,6 +36,10 @@ public class Notes implements Parcelable {
 
     public String getText() {
         return text;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -51,6 +61,13 @@ public class Notes implements Parcelable {
     }
 
     public Notes(String name, Date date, String text) {
+        this.name = name;
+        this.text = text;
+        this.date = date;
+    }
+
+    public Notes(String id, String name, Date date, String text) {
+        this.id = id;
         this.name = name;
         this.text = text;
         this.date = date;
@@ -82,6 +99,7 @@ public class Notes implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(name);
         dest.writeString(text);
         dest.writeLong(date.getTime());
