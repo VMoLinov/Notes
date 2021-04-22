@@ -20,7 +20,7 @@ import molinov.notes.ui.observe.Publisher;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private Publisher publisher = new Publisher();
+    private final Publisher publisher = new Publisher();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

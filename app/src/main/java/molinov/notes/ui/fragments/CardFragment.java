@@ -24,10 +24,6 @@ import molinov.notes.R;
 import molinov.notes.ui.data.CardAdapter;
 import molinov.notes.ui.data.CardsSource;
 import molinov.notes.ui.data.CardsSourceFirebase;
-import molinov.notes.ui.data.CardsSourceResponse;
-import molinov.notes.ui.data.DataNotes;
-import molinov.notes.ui.data.Notes;
-import molinov.notes.ui.observe.Observer;
 import molinov.notes.ui.observe.Publisher;
 
 public class CardFragment extends Fragment {
@@ -78,7 +74,7 @@ public class CardFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         if (moveToFirstPosition && data.getSize() > 0) {
-            recyclerView.smoothScrollToPosition(0);
+            recyclerView.scrollToPosition(0);
             moveToFirstPosition = false;
         }
     }
@@ -117,7 +113,7 @@ public class CardFragment extends Fragment {
                 return true;
             case R.id.action_update:
                 final int updatePosition = adapter.getMenuPosition();
-                NoteShowFragment noteShowFragmentUpdate = NoteShowFragment.newInstance(new Notes(updatePosition));
+                NoteShowFragment noteShowFragmentUpdate = NoteShowFragment.newInstance(data.getCardData(updatePosition));
                 openNote(noteShowFragmentUpdate);
                 publisher.subscribe(note -> {
                     data.updateCardData(updatePosition, note);
@@ -135,7 +131,6 @@ public class CardFragment extends Fragment {
                 return true;
         }
         return false;
-
     }
 
     private void openNote(Fragment fragment) {

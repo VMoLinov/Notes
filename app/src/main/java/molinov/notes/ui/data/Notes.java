@@ -73,12 +73,12 @@ public class Notes implements Parcelable {
         this.date = date;
     }
 
-    public Notes(int index) {
-        Notes note = DataNotes.getNoteFromList(index);
-        this.name = note.getName();
-        this.date = note.getDate();
-        this.text = note.getText();
-    }
+//    public Notes(int index) {
+//        Notes note = DataNotes.getNoteFromList(index);
+//        this.name = note.getName();
+//        this.date = note.getDate();
+//        this.text = note.getText();
+//    }
 
     public static final Creator<Notes> CREATOR = new Creator<Notes>() {
         @Override

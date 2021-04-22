@@ -22,6 +22,7 @@ import java.util.Date;
 
 import molinov.notes.MainActivity;
 import molinov.notes.R;
+import molinov.notes.ui.data.CardsSource;
 import molinov.notes.ui.data.Notes;
 import molinov.notes.ui.observe.Publisher;
 
@@ -84,11 +85,11 @@ public class NoteShowFragment extends Fragment {
     public void onStop() {
         super.onStop();
         note = collectNote();
+        publisher.notifySingle(note);
     }
 
     @Override
     public void onDestroy() {
-        publisher.notifySingle(note);
         super.onDestroy();
     }
 
@@ -97,7 +98,7 @@ public class NoteShowFragment extends Fragment {
         String text = this.noteShowText.getText().toString();
         Date date = note.getDate();
         if (note.getId() != null) {
-            return new Notes(note.getId(), name, date, text);
+            return note; // new Notes(note.getId(), name, date, text);
         } else {
             return new Notes(name, date, text);
         }

@@ -45,7 +45,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CardAdapter.ViewHolder holder, int position) {
-        holder.setData(DataNotes.getNoteFromList(position));
+        holder.setData(dataSource.getCardData(position));
     }
 
     @Override
