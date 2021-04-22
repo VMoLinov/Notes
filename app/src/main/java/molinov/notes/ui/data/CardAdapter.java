@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import molinov.notes.R;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
-    //    private final DataNotes dataNote;
+
     private final Fragment fragment;
     private CardsSource dataSource;
     private OnItemClickListener listener;
@@ -45,7 +45,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CardAdapter.ViewHolder holder, int position) {
-        holder.setData(DataNotes.getNoteFromList(position));
+        holder.setData(dataSource.getCardData(position));
     }
 
     @Override

@@ -20,13 +20,12 @@ public class CardsSourceFirebase implements CardsSource {
     private final CollectionReference collection = store.collection(CARDS_COLLECTION);
     private List<Notes> notes = new ArrayList<>();
 
-
     @Override
     public CardsSource init(CardsSourceResponse cardsSourceResponse) {
         collection.orderBy(CardDataMapping.Fields.DATE, Query.Direction.DESCENDING).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-//                        notes = new ArrayList<>();
+                        notes = new ArrayList<>();
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             Map<String, Object> doc = document.getData();
                             String id = document.getId();
@@ -43,6 +42,11 @@ public class CardsSourceFirebase implements CardsSource {
                     Log.d(TAG, "get failed with " + e);
                 });
         return this;
+    }
+
+    @Override
+    public Notes getCardData(int position) {
+        return notes.get(position);
     }
 
     @Override

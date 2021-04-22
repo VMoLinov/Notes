@@ -84,20 +84,16 @@ public class NoteShowFragment extends Fragment {
     public void onStop() {
         super.onStop();
         note = collectNote();
-    }
-
-    @Override
-    public void onDestroy() {
         publisher.notifySingle(note);
-        super.onDestroy();
     }
 
     private Notes collectNote() {
-        String name = this.noteShowName.getText().toString();
-        String text = this.noteShowText.getText().toString();
+        String name = noteShowName.getText().toString();
+        String text = noteShowText.getText().toString();
         Date date = note.getDate();
-        if (note.getId() != null) {
-            return new Notes(note.getId(), name, date, text);
+        String id = note.getId();
+        if (id != null) {
+            return new Notes(id, name, date, text);
         } else {
             return new Notes(name, date, text);
         }
