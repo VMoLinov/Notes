@@ -22,7 +22,6 @@ import java.util.Date;
 
 import molinov.notes.MainActivity;
 import molinov.notes.R;
-import molinov.notes.ui.data.CardsSource;
 import molinov.notes.ui.data.Notes;
 import molinov.notes.ui.observe.Publisher;
 

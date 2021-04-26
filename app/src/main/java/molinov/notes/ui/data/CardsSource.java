@@ -2,7 +2,7 @@ package molinov.notes.ui.data;
 
 public interface CardsSource {
 
-    CardsSource init (CardsSourceResponse cardsSourceResponse);
+    CardsSource init(CardsSourceResponse cardsSourceResponse);
 
     Notes getCardData(int position);
 
