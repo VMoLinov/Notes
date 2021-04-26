@@ -3,25 +3,34 @@ package molinov.notes.ui.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class Notes implements Parcelable {
 
     public static String PARCELABLE_KEY;
+    private String id;
     private String name;
-    private String date;
     private String text;
+    private Date date;
 
 
     protected Notes(Parcel in) {
+        id = in.readString();
         name = in.readString();
-        date = in.readString();
         text = in.readString();
+        date = new Date(in.readLong());
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -29,11 +38,15 @@ public class Notes implements Parcelable {
         return text;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -42,23 +55,30 @@ public class Notes implements Parcelable {
     }
 
     public Notes() {
-        this("Name 1", "Date 1", "Text 1");
+        this("New Note", null, "Enter text here");
+        date = Calendar.getInstance().getTime();
+//            date = String.valueOf(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
-    public Notes(int index) {
-        Notes note = DataNotes.getNoteFromList(index);
-        this.name = note.getName();
-        this.date = note.getDate();
-        this.text = note.getText();
-//        this = note.getNotesList(index);
-//        почему этот вариает не работает?
-    }
-
-    public Notes(String name, String date, String text) {
+    public Notes(String name, Date date, String text) {
         this.name = name;
-        this.date = date;
         this.text = text;
+        this.date = date;
     }
+
+    public Notes(String id, String name, Date date, String text) {
+        this.id = id;
+        this.name = name;
+        this.text = text;
+        this.date = date;
+    }
+
+//    public Notes(int index) {
+//        Notes note = DataNotes.getNoteFromList(index);
+//        this.name = note.getName();
+//        this.date = note.getDate();
+//        this.text = note.getText();
+//    }
 
     public static final Creator<Notes> CREATOR = new Creator<Notes>() {
         @Override
@@ -79,8 +99,9 @@ public class Notes implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(name);
-        dest.writeString(date);
         dest.writeString(text);
+        dest.writeLong(date.getTime());
     }
 }
