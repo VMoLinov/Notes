@@ -1,7 +1,10 @@
 package molinov.notes.ui.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -33,6 +37,7 @@ public class CardFragment extends Fragment {
     private RecyclerView recyclerView;
     private Publisher publisher;
     private boolean moveToFirstPosition;
+    private boolean dialogResult;
 
     public static CardFragment newInstance() {
         return new CardFragment();
@@ -120,16 +125,25 @@ public class CardFragment extends Fragment {
                 });
                 return true;
             case R.id.action_delete:
-                final int deletePosition = adapter.getMenuPosition();
-                data.deleteCardData(deletePosition);
-                adapter.notifyItemRemoved(deletePosition);
+                DialogFragment dlgBuilder = new DialogDelete(adapter.getMenuPosition(), this);
+                dlgBuilder.show(getParentFragmentManager(), "DELETE");
                 return true;
             case R.id.action_clear:
-                data.clearCardData();
-                adapter.notifyDataSetChanged();
+                DialogFragment dlgClearBuilder = new DialogClear(this);
+                dlgClearBuilder.show(getParentFragmentManager(), "CLEAR");
                 return true;
         }
         return false;
+    }
+
+    public void deletePos(int pos) {
+        data.deleteCardData(pos);
+        adapter.notifyItemRemoved(pos);
+    }
+
+    public void clear() {
+        data.clearCardData();
+        adapter.notifyDataSetChanged();
     }
 
     private void openNote(Fragment fragment) {
