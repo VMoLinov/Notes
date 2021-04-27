@@ -1,10 +1,7 @@
 package molinov.notes.ui.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -23,6 +20,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import molinov.notes.MainActivity;
 import molinov.notes.R;
 import molinov.notes.ui.data.CardAdapter;
@@ -37,10 +36,13 @@ public class CardFragment extends Fragment {
     private RecyclerView recyclerView;
     private Publisher publisher;
     private boolean moveToFirstPosition;
-    private boolean dialogResult;
 
     public static CardFragment newInstance() {
         return new CardFragment();
+    }
+
+    public CardsSource getData() {
+        return data;
     }
 
     @Override

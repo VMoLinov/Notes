@@ -25,6 +25,7 @@ public class DialogClear extends DialogFragment {
         final View contentView = requireActivity().getLayoutInflater().inflate(R.layout.dialog_custom, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.are_you_sure)
+                .setMessage(R.string.clear_all_notes)
                 .setView(contentView)
                 .setPositiveButton(R.string.yes, (DialogInterface.OnClickListener) (dialog, which) -> {
                     dismiss();

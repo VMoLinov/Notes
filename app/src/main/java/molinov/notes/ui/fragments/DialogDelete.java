@@ -27,6 +27,7 @@ public class DialogDelete extends DialogFragment {
         final View contentView = requireActivity().getLayoutInflater().inflate(R.layout.dialog_custom, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.are_you_sure)
+                .setMessage(getString(R.string.delete_note) + System.lineSeparator() + cardFragment.getData().getCardData(pos).getName())
                 .setView(contentView)
                 .setPositiveButton(R.string.yes, (DialogInterface.OnClickListener) (dialog, which) -> {
                     dismiss();

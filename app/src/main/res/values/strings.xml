@@ -16,7 +16,7 @@
     <string name="october">Октября</string>
     <string name="november">Ноября</string>
     <string name="december">Декабря</string>
-    <string name="title_activity_main2">MainActivity</string>
+    <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_user_name">User Name</string>
@@ -39,4 +39,6 @@
     <string name="com_vk_sdk_AppId">your_app_id</string>
     <string name="are_you_sure">Вы уверены?</string>
     <string name="name_delete">Delete</string>
+    <string name="clear_all_notes">Удаление всех заметок</string>
+    <string name="delete_note">Удаление заметки:</string>
 </resources>

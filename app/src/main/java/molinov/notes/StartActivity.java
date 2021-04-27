@@ -1,20 +1,12 @@
 package molinov.notes;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -24,9 +16,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-
-import molinov.notes.ui.fragments.CardFragment;
-import molinov.notes.ui.fragments.StartFragment;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -61,12 +50,9 @@ public class StartActivity extends AppCompatActivity {
         emailView = findViewById(R.id.email);
         next = findViewById(R.id.next);
         next.setOnClickListener(v -> {
-            CardFragment cardFragment = CardFragment.newInstance();
-            FragmentManager fm = getParentFragmentManager();
-            fm.beginTransaction()
-                    .replace(R.id.nav_host_fragment, cardFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .commit();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
