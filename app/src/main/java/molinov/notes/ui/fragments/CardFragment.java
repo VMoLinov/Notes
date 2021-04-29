@@ -12,12 +12,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import molinov.notes.MainActivity;
 import molinov.notes.R;
@@ -36,6 +39,10 @@ public class CardFragment extends Fragment {
 
     public static CardFragment newInstance() {
         return new CardFragment();
+    }
+
+    public CardsSource getData() {
+        return data;
     }
 
     @Override
@@ -120,16 +127,25 @@ public class CardFragment extends Fragment {
                 });
                 return true;
             case R.id.action_delete:
-                final int deletePosition = adapter.getMenuPosition();
-                data.deleteCardData(deletePosition);
-                adapter.notifyItemRemoved(deletePosition);
+                DialogFragment dlgBuilder = new DialogDelete(adapter.getMenuPosition(), this);
+                dlgBuilder.show(getParentFragmentManager(), "DELETE");
                 return true;
             case R.id.action_clear:
-                data.clearCardData();
-                adapter.notifyDataSetChanged();
+                DialogFragment dlgClearBuilder = new DialogClear(this);
+                dlgClearBuilder.show(getParentFragmentManager(), "CLEAR");
                 return true;
         }
         return false;
+    }
+
+    public void deletePos(int pos) {
+        data.deleteCardData(pos);
+        adapter.notifyItemRemoved(pos);
+    }
+
+    public void clear() {
+        data.clearCardData();
+        adapter.notifyDataSetChanged();
     }
 
     private void openNote(Fragment fragment) {
