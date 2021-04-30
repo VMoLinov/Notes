@@ -20,13 +20,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import molinov.notes.MainActivity;
 import molinov.notes.R;
 import molinov.notes.ui.data.CardAdapter;
 import molinov.notes.ui.data.CardsSource;
 import molinov.notes.ui.data.CardsSourceFirebase;
+import molinov.notes.ui.data.Notes;
+import molinov.notes.ui.observe.Observer;
 import molinov.notes.ui.observe.Publisher;
 
 public class CardFragment extends Fragment {
@@ -118,24 +118,31 @@ public class CardFragment extends Fragment {
                 });
                 return true;
             case R.id.action_update:
-                final int updatePosition = adapter.getMenuPosition();
-                NoteShowFragment noteShowFragmentUpdate = NoteShowFragment.newInstance(data.getCardData(updatePosition));
-                openNote(noteShowFragmentUpdate);
-                publisher.subscribe(note -> {
-                    data.updateCardData(updatePosition, note);
-                    adapter.notifyItemChanged(updatePosition);
-                });
+//                final int updatePosition = adapter.getMenuPosition();
+                DialogFragment dlgUpdate = DialogNote.newInstance(this, adapter.getMenuPosition());
+                dlgUpdate.show(getParentFragmentManager(), "UPDATE");
+//                NoteShowFragment noteShowFragmentUpdate = NoteShowFragment.newInstance(data.getCardData(updatePosition));
+//                openNote(noteShowFragmentUpdate);
+//                publisher.subscribe(note -> {
+//                    data.updateCardData(updatePosition, note);
+//                    adapter.notifyItemChanged(updatePosition);
+//                });
                 return true;
             case R.id.action_delete:
-                DialogFragment dlgBuilder = new DialogDelete(adapter.getMenuPosition(), this);
+                DialogFragment dlgBuilder = DialogDelete.newInstance(adapter.getMenuPosition(), this);
                 dlgBuilder.show(getParentFragmentManager(), "DELETE");
                 return true;
             case R.id.action_clear:
-                DialogFragment dlgClearBuilder = new DialogClear(this);
+                DialogFragment dlgClearBuilder = DialogClear.newInstance(this);
                 dlgClearBuilder.show(getParentFragmentManager(), "CLEAR");
                 return true;
         }
         return false;
+    }
+
+    public void update(Notes note, int pos) {
+        data.updateCardData(pos, note);
+        adapter.notifyDataSetChanged();
     }
 
     public void deletePos(int pos) {

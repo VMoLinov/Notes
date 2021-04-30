@@ -16,7 +16,11 @@ public class DialogDelete extends DialogFragment {
     private final int pos;
     private final CardFragment cardFragment;
 
-    public DialogDelete(int pos, CardFragment cardFragment) {
+    public static DialogDelete newInstance(int pos, CardFragment cardFragment) {
+        return new DialogDelete(pos, cardFragment);
+    }
+
+    private DialogDelete (int pos, CardFragment cardFragment) {
         this.pos = pos;
         this.cardFragment = cardFragment;
     }

@@ -41,4 +41,5 @@
     <string name="name_delete">Delete</string>
     <string name="clear_all_notes">Удаление всех заметок</string>
     <string name="delete_note">Удаление заметки:</string>
+    <string name="cancel">Cancel</string>
 </resources>

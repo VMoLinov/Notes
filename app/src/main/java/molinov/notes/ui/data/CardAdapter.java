@@ -58,12 +58,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     }
 
     public interface OnItemClickListener {
+
         void onItemClick(View view, int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView name, date, text;
 
+        private final TextView name, date, text;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
@@ -100,5 +101,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             text.setText(note.getText());
             date.setText(new SimpleDateFormat("dd-MM-yy").format(note.getDate()));
         }
+
     }
 }

@@ -15,7 +15,11 @@ public class DialogClear extends DialogFragment {
 
     private final CardFragment cardFragment;
 
-    public DialogClear(CardFragment cardFragment) {
+    public static DialogClear newInstance(CardFragment cardFragment) {
+        return new DialogClear(cardFragment);
+    }
+
+    private DialogClear(CardFragment cardFragment) {
         this.cardFragment = cardFragment;
     }
 
